@@ -12,7 +12,6 @@ import org.springframework.kafka.core.*;
 import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 
 import java.util.HashMap;
@@ -28,12 +27,11 @@ public class KafkaConfig {
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true); // 幂等生产
+//        props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true); // 幂等生产
         props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "my-transactional-id");
-        props.put(ProducerConfig.ACKS_CONFIG, "all");
-        DefaultKafkaProducerFactory<String, MessageEntity> stringStringDefaultKafkaProducerFactory = new DefaultKafkaProducerFactory<>(props);
-        stringStringDefaultKafkaProducerFactory.setValueSerializer(new JsonSerializer<>());
-        return stringStringDefaultKafkaProducerFactory;
+//        DefaultKafkaProducerFactory<String, MessageEntity> stringStringDefaultKafkaProducerFactory = ;
+//        stringStringDefaultKafkaProducerFactory.setValueSerializer(new JsonSerializer<>());
+        return new DefaultKafkaProducerFactory<>(props);
     }
 
     @Bean("kafkaTemplate")

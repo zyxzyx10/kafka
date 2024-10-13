@@ -49,3 +49,4 @@ server:
 #      enable-auto-commit: false # 禁用自动提交
 #      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 #      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
