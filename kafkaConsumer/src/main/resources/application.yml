@@ -1,0 +1,51 @@
+#spring:
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    consumer:
+#      group-id: my-consumer-group
+#      auto-offset-reset: earliest
+#      enable-auto-commit: false
+#      isolation-level: read_committed # 保证消费的消息是事务性提交的
+#    producer:
+#      transaction-id-prefix: my-tx- # 配置事务前缀，启用事务性生产者
+#    listener:
+#      concurrency: 3 # 并发消费
+#    template:
+#      default-topic: my-topic
+#    properties:
+#      enable:
+#        idempotence: true # 幂等性
+#      max:
+#        in:
+#          flight:
+#            requests: 5 # 控制并发消息数
+
+
+#
+server:
+  port: 8089
+
+#
+#kafka:
+#  transaction:
+#    id: my-transaction-id # 配置事务 ID 保证唯一性
+#  consumer:
+#    group-id: my-consumer-group
+#    auto-offset-reset: earliest
+#    enable-auto-commit: false
+#    isolation-level: read_committed
+#    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#
+#spring:
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    producer:
+#      enable.idempotence: true
+#      transactional-id: my-transactional-id # 事务 ID，确保唯一性
+#    consumer:
+#      group-id: my-consumer-group
+#      auto-offset-reset: earliest
+#      enable-auto-commit: false # 禁用自动提交
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
