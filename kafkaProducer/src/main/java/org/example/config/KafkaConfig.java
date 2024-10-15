@@ -27,7 +27,6 @@ public class KafkaConfig {
         props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "my-transactional-id");
         props.put(ProducerConfig.ACKS_CONFIG, "all");
         props.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, "1000");// to avoid error
-        //org.apache.kafka.common.errors.ProducerFencedException: There is a newer producer with the same transactionalId which fences the current one.
         DefaultKafkaProducerFactory<String, MessageEntity> stringStringDefaultKafkaProducerFactory = new DefaultKafkaProducerFactory<>(props);
         stringStringDefaultKafkaProducerFactory.setValueSerializer(new JsonSerializer<>());
         return stringStringDefaultKafkaProducerFactory;

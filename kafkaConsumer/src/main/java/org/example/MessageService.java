@@ -3,11 +3,11 @@ package org.example;
 
 import org.example.entity.MessageEntity;
 import org.example.repo.MessageRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Component
+@Service
 public class MessageService {
     private final MessageRepository messageRepository;
 
@@ -15,11 +15,11 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    @Transactional("dbTransactionManager")
-    public MessageEntity saveMessage(MessageEntity messageEntity) throws Exception {
+    @Transactional(value="dbTransactionManager", rollbackFor = Exception.class)
+    public MessageEntity saveMessage(MessageEntity messageEntity) {
         MessageEntity result = messageRepository.save(messageEntity);
         if ("error".equals(messageEntity.getMessage())) {
-            throw new Exception("error............");
+            throw new RuntimeException("error............");
         }
         return result;
     }

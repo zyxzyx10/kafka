@@ -4,13 +4,12 @@ import org.example.entity.MessageEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 //@EnableTransactionManagement
-@EnableRetry
+//@EnableRetry
 public class KafkaConsumer {
     private final MessageService messageService;
 
@@ -26,7 +25,7 @@ public class KafkaConsumer {
 
     @KafkaListener(topics = "my-topic", groupId = "my-consumer-group", containerFactory = "kafkaListenerContainerFactory")
     @Transactional("kafkaTransactionManager")
-    public void listen(@Payload MessageEntity message, Acknowledgment ack) throws Exception {
+    public void listen(@Payload MessageEntity message, Acknowledgment ack) {
         try {
             System.out.println("Received message: " + message);
             // 在这里可以处理消息，如保存到数据库等
@@ -37,7 +36,8 @@ public class KafkaConsumer {
         } catch (Exception e) {
             // 如果出现异常，事务将回滚，消息不会被确认并且会重新消费
             System.err.println("Error processing message, transaction will be rolled back.");
-            throw e;
+//            ack.acknowledge();
+//            throw e;
         }
     }
 }

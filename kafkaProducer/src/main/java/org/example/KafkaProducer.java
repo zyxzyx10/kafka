@@ -6,10 +6,13 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.example.entity.MessageEntity;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.Properties;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class KafkaProducer {
@@ -24,8 +27,15 @@ public class KafkaProducer {
 
     @Transactional
     public void sendMessage(MessageEntity messageEntity) {
-        System.out.println("Sending message: " + messageEntity.toString());
-        kafkaTemplate.send(TOPIC, messageEntity);
+        System.out.println("Sending message: " + messageEntity);
+        kafkaTemplate.send(TOPIC, messageEntity).thenAccept(result -> System.out.println("Sent message:" + result.getProducerRecord()));
+
+        messageEntity.setTimestamp(1);
+        System.out.println("Sending message: " + messageEntity);
+        kafkaTemplate.send(TOPIC, messageEntity).thenAccept(result -> System.out.println("Sent message:" + result.getProducerRecord()));;
+        if("senderError".equals(messageEntity.getMessage())) {
+            throw new RuntimeException("Throwing Exception, producer should rollback 2 messages due to the transactional sending.");
+        }
     }
 
     public static void main(String[] args) {
