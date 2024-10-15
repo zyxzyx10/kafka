@@ -24,7 +24,6 @@
 #
 server:
   port: 8089
-
 #
 #kafka:
 #  transaction:
@@ -49,4 +48,31 @@ server:
 #      enable-auto-commit: false # 禁用自动提交
 #      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 #      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=TRUE;DB_CLOSE_DELAY=0;mode=mysql;BUILTIN_ALIAS_OVERRIDE=1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
 
+    #    properties:
+    #      hibernate:
+    #        cache:
+    #          use_second_level_cache: true
+    #          use_query_cache: true
+    #  cache:
+    #    jcache:
+    #      provider: org.ehcache.jsr107.EhcacheCachingProvider
+    #    type: ehcache
+    
+    
+    

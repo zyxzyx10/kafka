@@ -1,9 +1,10 @@
-package org.example;
+package org.example.config;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.example.entity.MessageEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -65,6 +66,4 @@ public class KafkaConfig {
 //        factory.setRecordMessageConverter(new JsonMessageConverter());
         return factory;
     }
-
-
 }

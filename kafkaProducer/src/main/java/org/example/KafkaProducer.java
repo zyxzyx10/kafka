@@ -3,11 +3,9 @@ package org.example;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.entity.MessageEntity;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

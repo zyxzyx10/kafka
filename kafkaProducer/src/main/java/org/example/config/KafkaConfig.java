@@ -1,17 +1,12 @@
-package org.example;
+package org.example.config;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.example.entity.MessageEntity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
-import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
 
@@ -31,6 +26,8 @@ public class KafkaConfig {
         props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true); // 幂等生产
         props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "my-transactional-id");
         props.put(ProducerConfig.ACKS_CONFIG, "all");
+        props.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, "1000");// to avoid error
+        //org.apache.kafka.common.errors.ProducerFencedException: There is a newer producer with the same transactionalId which fences the current one.
         DefaultKafkaProducerFactory<String, MessageEntity> stringStringDefaultKafkaProducerFactory = new DefaultKafkaProducerFactory<>(props);
         stringStringDefaultKafkaProducerFactory.setValueSerializer(new JsonSerializer<>());
         return stringStringDefaultKafkaProducerFactory;

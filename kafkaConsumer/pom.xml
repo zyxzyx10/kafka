@@ -31,7 +31,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.kafka/spring-kafka -->
+        <!-- Kafka-->
         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
@@ -51,16 +51,40 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>5.6.15.Final</version>
-        </dependency>
+        <!-- Swagger Doc-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
         </dependency>
 
+        <!-- H2 DB -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>6.6.1.Final</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.hibernate</groupId>-->
+<!--            <artifactId>hibernate-ehcache</artifactId>-->
+<!--            <version>5.6.15.Final</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-cache</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 </project>
