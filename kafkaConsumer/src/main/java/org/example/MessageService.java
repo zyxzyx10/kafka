@@ -2,12 +2,12 @@ package org.example;
 
 
 import org.example.entity.MessageEntity;
+import org.example.exception.RetryableException;
 import org.example.repo.MessageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import java.security.*;
 
 import static net.i2p.crypto.eddsa.Utils.bytesToHex;
@@ -22,7 +22,7 @@ public class MessageService {
     }
 
     @Transactional(value="dbTransactionManager", rollbackFor = Exception.class)
-    public MessageEntity saveMessage(MessageEntity messageEntity) throws Exception {
+    public MessageEntity saveMessage(MessageEntity messageEntity) throws Exception, RetryableException {
         KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
         keyGen.initialize(2048); // 密钥长度
         KeyPair keyPair = keyGen.generateKeyPair();
@@ -41,8 +41,8 @@ public class MessageService {
         System.out.println("Decrypted message: " + new String(decryptedMessage));
 
         MessageEntity result = messageRepository.save(messageEntity);
-        if ("error".equals(messageEntity.getMessage())) {
-            throw new RuntimeException("error............");
+        if ("error".equals(messageEntity.getMessage()) && messageEntity.getTimestamp() == 1) {
+            throw new RetryableException("error............");
         }
         return result;
     }

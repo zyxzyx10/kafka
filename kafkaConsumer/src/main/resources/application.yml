@@ -54,6 +54,9 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 15
   h2:
     console:
       enabled: true
@@ -73,6 +76,15 @@ spring:
     #    jcache:
     #      provider: org.ehcache.jsr107.EhcacheCachingProvider
     #    type: ehcache
-    
-    
-    
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, env, loggers, threaddump
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
+    env:
+      keys-to-sanitize: ''

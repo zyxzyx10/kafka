@@ -2,3 +2,7 @@
 ### To open local H2 db console
 http://localhost:8089/h2-console
 db url: jdbc:h2:mem:testdb
+### Health Check
+http://localhost:8088/actuator/health
+http://localhost:8088/actuator/info
+http://localhost:8088/actuator/metrics

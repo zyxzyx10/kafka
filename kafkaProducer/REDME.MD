@@ -4,3 +4,7 @@
 
 ### To access Swagger UI and send test message:
 http://localhost:8088/swagger-ui/index.html#/kafka-controller/publishMessage
+### Health Check
+http://localhost:8088/actuator/health
+http://localhost:8088/actuator/info
+http://localhost:8088/actuator/metrics

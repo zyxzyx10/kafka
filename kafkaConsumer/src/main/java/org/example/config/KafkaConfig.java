@@ -11,9 +11,11 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.DefaultErrorHandler;
 import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.transaction.KafkaTransactionManager;
+import org.springframework.util.backoff.FixedBackOff;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +56,7 @@ public class KafkaConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false); // 禁用自动提交偏移量
         props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed"); // 只读取已提交的消息
+
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new ErrorHandlingDeserializer<>(new JsonDeserializer<>(MessageEntity.class)));
     }
 
@@ -63,7 +66,8 @@ public class KafkaConfig {
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(3); // 并发处理
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL); // 每条消息确认
-//        factory.setRecordMessageConverter(new JsonMessageConverter());
+        FixedBackOff fixedBackOff = new FixedBackOff(10000, 3);
+        factory.setCommonErrorHandler(new DefaultErrorHandler(fixedBackOff));
         return factory;
     }
 }
